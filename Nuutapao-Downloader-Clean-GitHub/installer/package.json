@@ -1,9 +1,0 @@
-{
-  "name": "nuutapao-downloader-custom-setup",
-  "version": "2.6.7",
-  "description": "Nuutapao Downloader Custom Setup Installer",
-  "main": "main.js",
-  "scripts": {
-    "start": "electron ."
-  }
-}
