@@ -1,0 +1,9 @@
+{
+  "name": "nuutapao-tools-custom-setup",
+  "version": "3.1.0",
+  "description": "Nuutapao Tools V.3.1 Custom Setup Installer",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  }
+}
