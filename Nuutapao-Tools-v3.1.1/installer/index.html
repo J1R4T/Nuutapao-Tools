@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nuutapao Tools V.3.1 Setup</title>
+  <!-- Critical inline CSS for instant first paint -->
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body { width: 100vw; height: 100vh; background: transparent; display: flex; align-items: center; justify-content: center; font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; overflow: hidden; }
+    .setup-container { width: 832px; height: 468px; background: #141416; border-radius: 28px; position: relative; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,0.9), 0 0 32px rgba(255,107,74,0.25); -webkit-mask-image: -webkit-radial-gradient(white, black); transform: translateZ(0); }
+    .border-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: fill; pointer-events: none; z-index: 0; will-change: transform; transform: translateZ(0); }
+    .titlebar { height: 48px; min-height: 48px; max-height: 48px; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; -webkit-app-region: drag; position: relative; z-index: 30; flex-shrink: 0; }
+    .main-body { flex: 1; min-height: 0; max-height: 378px; display: flex; flex-direction: column; padding: 0 58px; position: relative; z-index: 20; overflow: hidden; }
+    .stars-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: hidden; visibility: hidden; }
+    .hidden { display: none !important; }
+  </style>
+  <!-- Full stylesheet loaded async (non-render-blocking) -->
+  <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="style.css"></noscript>
+</head>
+<body>
+  <div class="setup-container">
+    <!-- Border Overlay (LOWER LAYER — behind all content) -->
+    <img src="../public/Nuutapao border.png" alt="Nuutapao Border" class="border-overlay" fetchpriority="high" decoding="async">
+
+    <!-- Animated Star Particles (lower layer, above border) -->
+    <div class="stars-container">
+      <span class="star" style="top:8%; left:5%; --dur:3.2s; --delay:0s;">✦</span>
+      <span class="star" style="top:6%; left:92%; --dur:2.8s; --delay:0.5s;">✧</span>
+      <span class="star" style="top:22%; left:3%; --dur:3.5s; --delay:1.2s;">✦</span>
+      <span class="star" style="top:18%; right:4%; --dur:4s; --delay:0.8s;">✧</span>
+      <span class="star" style="top:50%; left:2%; --dur:3s; --delay:1.8s;">✦</span>
+      <span class="star" style="top:55%; right:3%; --dur:3.6s; --delay:0.3s;">✧</span>
+      <span class="star" style="top:38%; left:8%; --dur:4.2s; --delay:2s;">✦</span>
+      <span class="star" style="top:42%; right:7%; --dur:3.8s; --delay:1.5s;">✧</span>
+      <span class="star" style="top:12%; left:48%; --dur:3.4s; --delay:2.5s;">✦</span>
+      <span class="star" style="top:75%; left:6%; --dur:2.5s; --delay:0.7s;">✧</span>
+      <span class="star" style="top:72%; right:5%; --dur:3.3s; --delay:1.1s;">✦</span>
+      <span class="star" style="top:85%; left:15%; --dur:4.5s; --delay:0.2s;">✧</span>
+      <span class="star" style="top:82%; right:12%; --dur:3.1s; --delay:1.6s;">✦</span>
+
+      <!-- Floating micro-stars -->
+      <span class="star-float" style="bottom:20%; left:10%; --dur:6s; --delay:0s;">⋆</span>
+      <span class="star-float" style="bottom:15%; right:8%; --dur:5s; --delay:1s;">⋆</span>
+      <span class="star-float" style="bottom:30%; left:50%; --dur:7s; --delay:2s;">⋆</span>
+      <span class="star-float" style="bottom:25%; left:85%; --dur:5.5s; --delay:0.5s;">⋆</span>
+      <span class="star-float" style="bottom:10%; left:30%; --dur:6.5s; --delay:1.5s;">⋆</span>
+      <span class="star-float" style="bottom:35%; left:70%; --dur:4.5s; --delay:2.5s;">⋆</span>
+    </div>
+
+    <!-- Window Titlebar & Controls -->
+    <div class="titlebar">
+      <div class="title-content">
+        <img src="../public/Nuutapao Human Head.png" alt="Nuutapao Logo" class="header-mascot">
+        <h1 class="header-title">NUUTAPAO TOOLS V.3.1</h1>
+      </div>
+
+      <div class="titlebar-right">
+        <button class="win-btn win-min" id="minBtn" title="Minimize">
+          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+        <button class="win-btn win-close" id="closeBtn" title="Close">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="main-body">
+      <!-- Installation Log Terminal -->
+      <div class="terminal-box" id="terminalBox">
+        <div class="terminal-logs" id="terminalLogs">
+          <div class="log-line"><span>•</span> Ready to install Nuutapao Tools V.3.1</div>
+        </div>
+      </div>
+
+      <!-- Path Selection & Controls Bar -->
+      <div class="controls-bar" id="controlsBar">
+        <div class="path-input-wrapper">
+          <span class="path-label">Install to:</span>
+          <input type="text" id="installPathInput" class="path-input" spellcheck="false" readonly>
+          <button id="browseBtn" class="btn btn-secondary">Browse</button>
+        </div>
+        <div class="options-row">
+          <label class="checkbox-label" for="desktopShortcutCheck">
+            <input type="checkbox" id="desktopShortcutCheck" checked>
+            <span>Desktop Shortcut</span>
+          </label>
+          <label class="checkbox-label" for="startMenuShortcutCheck">
+            <input type="checkbox" id="startMenuShortcutCheck" checked>
+            <span>Start Menu</span>
+          </label>
+          <button id="installBtn" class="btn btn-primary">Start Install ✨</button>
+        </div>
+      </div>
+
+      <!-- Action Area When Completed -->
+      <div class="complete-bar hidden" id="completeBar">
+        <div class="complete-message">✨ Installation Completed Successfully! ✨</div>
+        <button id="launchBtn" class="btn btn-primary btn-pulse">Launch Nuutapao Tools 🚀</button>
+      </div>
+
+      <!-- Animated Progress Bar with Petting Mascot -->
+      <div class="progress-section">
+        <div class="progress-track" id="progressTrack">
+          <div class="progress-fill" id="progressFill"></div>
+          
+          <!-- Petting Mascot Riding Along Progress Bar -->
+          <div class="pet-slider" id="petSlider">
+            <img src="../public/Nuutapao petting2.gif" alt="Petting Nuutapao" class="pet-gif">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty Spacer for Bottom Cloud Area of Border -->
+    <div class="footer-spacer"></div>
+  </div>
+
+  <script src="installer.js"></script>
+  <script>
+    // Reveal star animations after the window is visible to avoid
+    // triggering 19 concurrent CSS animations during initial paint
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const stars = document.querySelector('.stars-container');
+        if (stars) stars.style.visibility = 'visible';
+      });
+    });
+  </script>
+</body>
+</html>
